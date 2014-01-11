@@ -2,20 +2,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from matplotlib import rcParams
-# this line causes error - check what it does
-# rcParams['text.usetex'] = True
+rcParams['text.usetex'] = True
 
 
 class SemanticVisualization(object):
 
-	def __init__(self,trigger, data, delimiter = '\t'):
+	def __init__(self,trigger, delimiter = '\t'):
 		self.trigger = trigger
-		self.filename = 'C:/Users/Default.Default-THINK/Documents/GitHub/Toxic/data/%s.similarity-matrix-tsv'%(trigger)
+		self.filename = 'C:\Users\Default.Default-THINK\Documents\GitHub\Toxic\data\%s.similarity-matrix-tsv'%(trigger)
+##		self.filename = '/Volumes/My Book/Toxic/data/%s.similarity-matrix-tsv'%(trigger)
 		#again with the dangerous path constructions	
 		self.delimiter = delimiter
 
-                self.data = data
-##		self.data = np.loadtxt(self.filename,delimiter=self.delimiter, dtype='str')
+		self.data = np.loadtxt(self.filename,delimiter=self.delimiter, dtype='str')
 
 	def heatmap(self,ax=None, show=False,savename=None):
 
@@ -34,5 +33,5 @@ class SemanticVisualization(object):
 		if show:
 			plt.show()
 
-##x = SemanticVisualization(trigger='bob')
-##x.heatmap(show=True)
+x = SemanticVisualization(trigger='tes')
+x.heatmap(show=True)

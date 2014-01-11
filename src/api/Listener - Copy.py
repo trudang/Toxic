@@ -5,7 +5,7 @@ from tweepy import Stream
 
 class Listener(StreamListener):
 
-	def __init__(self,filename, ceiling=50):
+	def __init__(self,filename, ceiling=400):
 		self.ceiling = ceiling
 		self.trigger = filename
 		super(Listener,self).__init__()
@@ -17,7 +17,7 @@ class Listener(StreamListener):
 		self.counter = 0
 
 	def __nonzero__(self):
-		return self.counter > self.ceiling
+		return self.count > self.ceiling
 
 	def on_data(self, data):
 		if  'in_reply_to_status' in data:

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from nltk.corpus import stopwords
 
-import json, os
+import json, os, simplejson
 
 class TwitterRecord(object):
 	def __init__(self,keywords):
@@ -11,7 +11,13 @@ class TwitterRecord(object):
 			if self.trigger in filename and not filename.endswith('txt')]
 		
 		for filename in self.filenames:
-			json.load(open('../data/%s'%filename,'rb'))
+			print 'start'
+			f = open('../data/%s'%filename,'rb')
+			print f.readline()
+			# simplejson.load(open('../data/%s'%filename,'rb'))
+			# json.load(open('../data/%s'%filename,'rb'))
+			print 'end'
+			break
 
 		self.tweets = [tweet['text'] for tweet in json.load(open('../data/%s'%(filename),'rb')) 
 				for filename in self.filenames]
