@@ -12,6 +12,7 @@ from termcolor import colored
 READ = 'rb'
 # stopwords = open('./data/stopwords',READ).readlines()
 stopwords = open('./data/stopwords',READ).readlines()
+stopwords = [stopword.rstrip('\r\n') for stopword in stopwords]
 
 punctuation = set(string.punctuation) #Can make more efficient with a translator table
 
