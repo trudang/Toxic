@@ -28,6 +28,8 @@ strings = ["Making out with the air while trying to find the straw in your drink
            "Keep horses drinking during freezing weather...and all animals.",
            "establishing difference is a crucial element to satisfying programming"]
 
+lemmaStrings = [SemanticString(string, db).lemma() for string in strings]
+
 ##strings = ['tag', 'u t@g me', 'TAKE ME TO WORK AND SING']
 start = time()
 
@@ -63,10 +65,15 @@ print('/----------------Beginning test ------------\\')
 distances = [[SemanticString(one,db)- SemanticString(two,db) for one in strings ] for two in strings ]
 
 print distances
+# print lemmaStrings
 
-fig = plt.figure()
+fig = plt.figure(figsize=(10,10))
+plt.xticks(range(len(lemmaStrings)+1))
+plt.yticks(range(len(lemmaStrings)+1))
 ax = fig.add_subplot(111)
 ax.imshow(distances,interpolation='nearest',aspect='auto')
+ax.set_xticklabels(lemmaStrings, rotation = 'vertical')
+ax.set_yticklabels(lemmaStrings)
 plt.tight_layout()
 plt.show()
 
@@ -77,4 +84,5 @@ print '---'
 # json.dump(db,open(filename,APPEND))	
 print '|Duration %.04f s|'%(time()-start)
 print('\----------------Finished test ------------/')
+
 

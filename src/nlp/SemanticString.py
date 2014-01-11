@@ -39,3 +39,6 @@ class SemanticString(object):
 
 	def __repr__(self):
 		return  '%s--> %s'%(colored(self.text,'red'),colored(' '.join([token.word for token in self.tokens]),'green'))
+
+	def lemma(self):
+		return ' '.join([token.word for token in self.tokens])
