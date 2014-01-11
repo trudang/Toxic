@@ -10,8 +10,6 @@ from nltk.corpus import wordnet
 from termcolor import colored
 # from src.visualization.visualization import SemanticVisualization
 
-np.seterr(all = 0)
-
 filename = './data/semantic-distance-database.json'
 READ = 'rb'
 WRITE = 'wb'
