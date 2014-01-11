@@ -8,7 +8,7 @@ from pprint import pprint
 from src.nlp.SemanticString import SemanticString
 from nltk.corpus import wordnet
 from termcolor import colored
-from src.visualization.visualization import SemanticVisualization
+# from src.visualization.visualization import SemanticVisualization
 
 filename = './data/semantic-distance-database.json'
 READ = 'rb'
@@ -46,9 +46,9 @@ print('/----------------Beginning test ------------\\')
 ##
 ##		print '|Semantic distance between them: %.04f |'%(d1-d2)
 
-filename = 'C:/Users/Default.Default-THINK/Documents/GitHub/Toxic/data/%s.similarity-matrix-tsv'%('test1')
+# matrixName = 'C:/Users/Default.Default-THINK/Documents/GitHub/Toxic/data/%s.similarity-matrix-tsv'%('test1')
 
-##matrix = np.memmap(filename,dtype='float32',mode='w+',
+##matrix = np.memmap(matrixName,dtype='float32',mode='w+',
 ##                        shape=(len(strings),len(strings)))
 ##
 ##for i in xrange(len(strings)):
@@ -74,7 +74,7 @@ plt.show()
 ##x.heatmap(savename='test1',show=True)
 
 print '---'
-json.dump(db,open(filename,WRITE))	
+# json.dump(db,open(filename,APPEND))	
 print '|Duration %.04f s|'%(time()-start)
 print('\----------------Finished test ------------/')
 
