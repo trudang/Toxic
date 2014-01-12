@@ -2,8 +2,8 @@ import numpy as np
 import xlwt
 import xlrd
 
-a = np.random.randint(-1,2,90)
-b = np.random.randint(-1,2,90)
+a = np.random.randint(-1,2,900)
+b = np.random.randint(-1,2,900)
 
 labels = ['= -1', '= 0', '= 1']
 
@@ -35,7 +35,7 @@ def contigencyTables_to_xls(combs):
 	workbook = xlwt.Workbook()
 	for x,y in combs:
 		contigencyTable(x,y, workbook)
-	workbook.save("test_randint_contigency.xls")
+	workbook.save("test_randint_contigency2.xls")
 
 combs = [(a,a), (a,b), (b,a), (b,b)]
 
