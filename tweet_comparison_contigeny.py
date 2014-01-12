@@ -1,8 +1,9 @@
 import numpy as np
 import xlwt
 import xlrd
+import itertools
 
-labels = ['SD < toxic', 'SD == toxic +- 5%', 'SD > toxic']
+labels = ['SD < toxic - 5%', 'SD == toxic +- 5%', 'SD > toxic + 5%']
 
 workbook_input = xlrd.open_workbook('tweet_comparison_total.xls')
 sheet_input = workbook_input.sheet_by_index(0)
@@ -52,6 +53,13 @@ def contigencyTable(x, y, workbook):
 
 	for row,col in dic:
 		sheet.write(row+2, col+2, dic[row,col])
+
+	col_width = 256 * (len(labels[1]) + 1)
+	try:
+		for i in itertools.count():
+			sheet.col(i).width = col_width
+	except ValueError:
+		pass
 
 def contigencyTables_to_xls(combs):
 	workbook = xlwt.Workbook()
