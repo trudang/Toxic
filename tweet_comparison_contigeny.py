@@ -54,6 +54,20 @@ def contigencyTable(x, y, workbook):
 	for row,col in dic:
 		sheet.write(row+2, col+2, dic[row,col])
 
+	m = np.zeros(shape=(len(labels), len(labels)))
+
+	for r,c in dic:
+		m[r,c] = dic[r,c]
+
+	sheet.write(0, len(labels)+2, 'Trace', style)
+	sheet.write(0, len(labels)+3, np.trace(m))
+
+	sheet.write(1, len(labels)+2, 'Sum', style)
+	sheet.write(1, len(labels)+3, m.sum())
+
+	sheet.write(3, len(labels)+2, 'Trace/Sum', style)
+	sheet.write(3, len(labels)+3, np.trace(m)/float(m.sum()))
+
 	col_width = 256 * (len(labels[1]) + 1)
 	try:
 		for i in itertools.count():
