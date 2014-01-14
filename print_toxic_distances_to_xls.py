@@ -8,16 +8,9 @@ filename = './data/semantic-distance-database.json'
 READ = 'rb'
 db = json.load(open(filename,READ))
 
-strings = ["Making out with the air while trying to find the straw in your drink.",
-           "You drink too much, swear too much and your morals are questionable.",
-           "I drink green juice every morning",
-           "Drink some water after you wake up.",
-           "When u feelin the drinks and drugs in the club",
-           "i tink i had a bit too many drinks!cant find m phone!would u mind looking for it?",
-           "Sitting outside at a cafe drinking our first legal drinks.",
-           "I don't have a drinking problem",
-           "Keep horses drinking during freezing weather...and all animals.",
-           "establishing difference is a crucial element to satisfying programming"]
+txt_name = './tweet_comparison_data/drink_10.txt'
+with open(txt_name) as f:
+  strings = [tweet.strip() for tweet in f.readlines()]
 
 lemmaStrings = [SemanticString(string, db).lemma() for string in strings]
 
@@ -29,9 +22,7 @@ tweet_comb = [(a, ' -VS- ',b) for a,b in comb]
 
 # print len(tweet_comb)
 
-distances = [SemanticString(a,db)- SemanticString(b,db) for a,b in comb]
-
-# print distances
+distances = [SemanticString(a,db) - SemanticString(b,db) for a,b in comb]
 
 maxDis = max(distances)
 
@@ -50,7 +41,7 @@ for row in xrange(1, len(tweet_comb)+1):
 for row in xrange(1, len(tweet_comb)+1):
   sheet.write(row, 1, scaledDistances[row-1])
 
-workbook.save("tweet_comparison_toxic.xls") 
+# workbook.save("tweet10_comparison_toxic.xls") 
 
 
 

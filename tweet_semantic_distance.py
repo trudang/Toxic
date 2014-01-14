@@ -16,17 +16,9 @@ WRITE = 'wb'
 APPEND = 'a+'
 db = json.load(open(filename,READ))
 
-
-strings = ["Making out with the air while trying to find the straw in your drink.",
-           "You drink too much, swear too much and your morals are questionable.",
-           "I drink green juice every morning",
-           "Drink some water after you wake up.",
-           "When u feelin the drinks and drugs in the club",
-           "i tink i had a bit too many drinks!cant find m phone!would u mind looking for it?",
-           "Sitting outside at a cafe drinking our first legal drinks.",
-           "I don't have a drinking problem",
-           "Keep horses drinking during freezing weather...and all animals.",
-           "establishing difference is a crucial element to satisfying programming"]
+txt_name = './tweet_comparison_data/drink_20.txt'
+with open(txt_name) as f:
+  strings = [tweet.strip() for tweet in f.readlines()]
 
 lemmaStrings = [SemanticString(string, db).lemma() for string in strings]
 
@@ -62,16 +54,20 @@ print('/----------------Beginning test ------------\\')
 ##del matrix
 ##matrix.close()
 
-distances = [[SemanticString(one,db)- SemanticString(two,db) for one in strings ] for two in strings ]
+distances = [[SemanticString(one,db)- SemanticString(two,db) for one in lemmaStrings] for two in lemmaStrings]
 
-print distances
-# print lemmaStrings
+maxDis = np.max(distances)
 
-fig = plt.figure(figsize=(10,10))
+scaledDistances = [[d/maxDis for d in distance] for distance in distances]
+
+print scaledDistances
+
+fig = plt.figure(figsize=(15,15)) 	#figsize=(10,10) for 20 tweets
 plt.xticks(range(len(lemmaStrings)+1))
 plt.yticks(range(len(lemmaStrings)+1))
 ax = fig.add_subplot(111)
-cax = ax.imshow(distances,interpolation='nearest',aspect='auto')
+cax = ax.imshow(scaledDistances,interpolation='nearest',aspect='auto')
+cax.set_clim(vmin=0,vmax=1.0)
 ax.set_xticklabels(lemmaStrings, rotation = 'vertical')
 ax.set_yticklabels(lemmaStrings)
 plt.tight_layout()
