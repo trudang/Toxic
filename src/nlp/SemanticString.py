@@ -33,13 +33,17 @@ class SemanticString(object):
 		if self.text == other.text:
 			return 0
 		else:
-			similarities = np.array(filter(None,[self.tokens[i] - other.tokens[j] 
+			distances = np.array(filter(None,[self.tokens[i] - other.tokens[j] 
 								for i in xrange(len(self.tokens)) for j in xrange(len(other.tokens))]))
-			similarities = similarities[~np.isnan(similarities)]
-		return 1-np.average(similarities) if similarities != [] else None
+			distances = distances[~np.isnan(distances)]
+		return np.average(distances) if distances != [] else None
 
 	def __repr__(self):
+<<<<<<< HEAD
 		return  '%s--> %s'%(colored(self.text,'red'),colored(' '.join([token.word for token in self.tokens]),'green'))
 
 	def lemma(self):
 		return ' '.join([token.word for token in self.tokens])
+=======
+		return  '%s--> %s'%(colored(self.text,'red'),colored(' '.join(filter(None,[token.word for token in self.tokens])),'green'))
+>>>>>>> upstream/master

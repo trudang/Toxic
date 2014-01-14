@@ -10,6 +10,7 @@ class TwitterRecord(object):
 		self.filenames = [filename for filename in os.listdir('../data/') 
 			if self.trigger in filename and not filename.endswith('txt')]
 		
+<<<<<<< HEAD
 		for filename in self.filenames:
 			print 'start'
 			f = open('../data/%s'%filename,'rb')
@@ -19,6 +20,8 @@ class TwitterRecord(object):
 			print 'end'
 			break
 
+=======
+>>>>>>> upstream/master
 		self.tweets = [tweet['text'] for tweet in json.load(open('../data/%s'%(filename),'rb')) 
 				for filename in self.filenames]
 
