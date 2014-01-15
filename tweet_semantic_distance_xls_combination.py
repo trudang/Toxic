@@ -20,11 +20,12 @@ wb_name = 'tweet20_comparison_total.xls'
 workbook_input = xlrd.open_workbook(wb_name)
 sheet_input = workbook_input.sheet_by_index(0)
 
-ntweets = {'10_tweets': {'toxic': 1, 'tru': 2, 'mike': 3, 'nick': 4}, '20_tweets': {'toxic': 1, 'nick': 2, 'tru': 3, 'mike': 4}}
+ntweets = {'10_tweets': {'toxic': 1, 'tru': 2, 'mike': 3, 'nick': 4, 'toxicNEW': 5},
+			'20_tweets': {'toxic': 1, 'nick': 2, 'tru': 3, 'mike': 4, 'toxicNEW': 5}}
 
 raters = ntweets['20_tweets']
 
-rater = 'tru'
+rater = 'toxicNEW'
 
 data = [sheet_input.cell_value(row, raters[rater]) for row in xrange(1, sheet_input.nrows)]
 

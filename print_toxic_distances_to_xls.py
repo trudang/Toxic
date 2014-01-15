@@ -8,7 +8,7 @@ filename = './data/semantic-distance-database.json'
 READ = 'rb'
 db = json.load(open(filename,READ))
 
-txt_name = './tweet_comparison_data/drink_10.txt'
+txt_name = './tweet_comparison_data/drink_20.txt'
 with open(txt_name) as f:
   strings = [tweet.strip() for tweet in f.readlines()]
 
@@ -41,7 +41,7 @@ for row in xrange(1, len(tweet_comb)+1):
 for row in xrange(1, len(tweet_comb)+1):
   sheet.write(row, 1, scaledDistances[row-1])
 
-# workbook.save("tweet10_comparison_toxic.xls") 
+workbook.save("tweet20_comparison_toxic.xls") 
 
 
 

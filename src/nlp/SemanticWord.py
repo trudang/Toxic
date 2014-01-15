@@ -32,9 +32,8 @@ class SemanticWord(object):
 			if transpose_query in self.db:
 				self.db[query] = self.db[transpose_query]
 			else:
-				distance = np.average(filter(None,[a.shortest_path_distance(b) + b.shortest_path_distance(a)
-						for a in self.synset for b in other.synset]))/2.0 
-				self.db[query] = distance if distance else 0
+				distance = filter(None,[a.shortest_path_distance(b) for a in self.synset for b in other.synset])
+				self.db[query] = np.average(distance) if distance != [] else None
 		return self.db[query]
 
 

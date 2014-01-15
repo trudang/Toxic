@@ -39,11 +39,8 @@ class SemanticString(object):
 		return np.average(distances) if distances != [] else None
 
 	def __repr__(self):
-<<<<<<< HEAD
-		return  '%s--> %s'%(colored(self.text,'red'),colored(' '.join([token.word for token in self.tokens]),'green'))
+		return  '%s--> %s'%(colored(self.text,'red'),colored(' '.join(filter(None,[token.word for token in self.tokens])),'green'))
 
 	def lemma(self):
 		return ' '.join([token.word for token in self.tokens])
-=======
-		return  '%s--> %s'%(colored(self.text,'red'),colored(' '.join(filter(None,[token.word for token in self.tokens])),'green'))
->>>>>>> upstream/master
+

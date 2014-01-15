@@ -22,7 +22,8 @@ with open(txt_name) as f:
 
 lemmaStrings = [SemanticString(string, db).lemma() for string in strings]
 
-##strings = ['tag', 'u t@g me', 'TAKE ME TO WORK AND SING']
+print lemmaStrings
+
 start = time()
 
 
@@ -58,11 +59,14 @@ distances = [[SemanticString(one,db)- SemanticString(two,db) for one in lemmaStr
 
 maxDis = np.max(distances)
 
+print maxDis
+
 scaledDistances = [[d/maxDis for d in distance] for distance in distances]
 
-print scaledDistances
+sizes = {'10_tweets': (10,10), '20_tweets': (15,15)}
 
-fig = plt.figure(figsize=(15,15)) 	#figsize=(10,10) for 20 tweets
+size = sizes['20_tweets']
+fig = plt.figure(figsize=size)
 plt.xticks(range(len(lemmaStrings)+1))
 plt.yticks(range(len(lemmaStrings)+1))
 ax = fig.add_subplot(111)

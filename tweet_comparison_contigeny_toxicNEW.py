@@ -4,7 +4,7 @@ import xlrd
 import itertools
 
 # Define labels for rows & columns in Excel sheet
-labels = ['SD < toxic - 5%', 'SD == toxic +- 5%', 'SD > toxic + 5%']
+labels = ['SD < toxicNEW - 5%', 'SD == toxicNEW +- 5%', 'SD > toxicNEW + 5%']
 
 # Import data of all ratings
 workbook_input = xlrd.open_workbook('tweet20_comparison_total.xls')
@@ -38,18 +38,18 @@ def contigencyTable(x, y, workbook):
 
 	for var in [new_x, new_y]:
 		for i in range(len(var)):
-			# print var[i], toxic[i] - .05*toxic[i], toxic[i] + .05*toxic[i]
-			if toxic[i] - .05*toxic[i] <= var[i] <= toxic[i] + .05*toxic[i]:
+			# print var[i], toxicNEW[i] - .05*toxicNEW[i], toxicNEW[i] + .05*toxicNEW[i]
+			if toxicNEW[i] - .05*toxicNEW[i] <= var[i] <= toxicNEW[i] + .05*toxicNEW[i]:
 				# print 'equal'
 				var[i] = 0
-			elif var[i] < toxic[i] - .05*toxic[i]:
+			elif var[i] < toxicNEW[i] - .05*toxicNEW[i]:
 				# print 'smaller'
 				var[i] = -1
-			elif var[i] > toxic[i] + .05*toxic[i]:
+			elif var[i] > toxicNEW[i] + .05*toxicNEW[i]:
 				# print 'larger'
 				var[i] = 1
 
-	for i in range(len(toxic)):
+	for i in range(len(toxicNEW)):
 		dic[new_x[i], new_y[i]] += 1
 
 	# Creating sheet with combination label
@@ -96,7 +96,7 @@ def contigencyTables_to_xls(combs):
 	workbook = xlwt.Workbook()
 	for x,y in combs:
 		contigencyTable(x,y, workbook)
-	workbook.save("tweet20_comparison_contigency.xls")
+	workbook.save("tweet20_comparison_contigency_toxicNEW.xls")
 
 raters = [toxic, tru, nick, toxicNEW]
 
