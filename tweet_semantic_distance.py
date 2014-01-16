@@ -22,8 +22,6 @@ with open(txt_name) as f:
 
 lemmaStrings = [SemanticString(string, db).lemma() for string in strings]
 
-print lemmaStrings
-
 start = time()
 
 
@@ -57,11 +55,10 @@ print('/----------------Beginning test ------------\\')
 
 distances = [[SemanticString(one,db)- SemanticString(two,db) for one in lemmaStrings] for two in lemmaStrings]
 
+minDis = np.min(distances)
 maxDis = np.max(distances)
 
-print maxDis
-
-scaledDistances = [[d/maxDis for d in distance] for distance in distances]
+scaledDistances = [[(d - minDis)/maxDis for d in distance] for distance in distances]
 
 sizes = {'10_tweets': (10,10), '20_tweets': (15,15)}
 

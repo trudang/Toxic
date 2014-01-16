@@ -24,9 +24,10 @@ tweet_comb = [(a, ' -VS- ',b) for a,b in comb]
 
 distances = [SemanticString(a,db) - SemanticString(b,db) for a,b in comb]
 
+minDis = min(distances)
 maxDis = max(distances)
 
-scaledDistances = [distance/maxDis for distance in distances]
+scaledDistances = [(distance - minDis)/maxDis for distance in distances]
 
 workbook = xlwt.Workbook() 
 sheet = workbook.add_sheet("Tweets Comparison")

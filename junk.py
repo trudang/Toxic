@@ -1,3 +1,8 @@
-a = [(a,b) for a in xrange(10) for b in xrange(20,30)]
+a = ''
+
+strings = ['First string', 'Second string', 'Third string']
+
+for s in strings:
+	a += s + ' '
 
 print a
