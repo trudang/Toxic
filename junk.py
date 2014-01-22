@@ -24,3 +24,11 @@ print a.keys()
 print a['b'].values()
 
 print len([sum(a['b'].values())])
+
+look = range(100)
+
+interval = (1,20)
+
+interval = 100 if interval == 'all' else look[interval[0]:interval[1]]
+
+print interval
