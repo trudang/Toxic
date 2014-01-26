@@ -3,16 +3,20 @@ import itertools
 import xlwt
 import xlrd
 from src.nlp.SemanticString import SemanticString
+from test_kernel_functions import get_kernel
 
 filename = './data/semantic-distance-database.json'
 READ = 'rb'
 db = json.load(open(filename,READ))
 
-txt_name = './tweet_comparison_data/drink_20.txt'
+txt_name = './tweet_comparison_data/drink_10.txt'
 with open(txt_name) as f:
-  strings = [tweet.strip() for tweet in f.readlines()]
+	strings = [tweet.strip() for tweet in f.readlines()]
 
-lemmaStrings = [SemanticString(string, db).lemma() for string in strings]
+db_name = 'db-text'
+kernel = get_kernel(db_name,normed=True)
+
+lemmaStrings = [SemanticString(string, db, kernel).lemma() for string in strings]
 
 comb_itertools = itertools.combinations(lemmaStrings,2)
 
@@ -22,12 +26,12 @@ tweet_comb = [(a, ' -VS- ',b) for a,b in comb]
 
 # print len(tweet_comb)
 
-distances = [SemanticString(a,db) - SemanticString(b,db) for a,b in comb]
+distances = [SemanticString(a,db,kernel) - SemanticString(b,db,kernel) for a,b in comb]
 
 minDis = min(distances)
 maxDis = max(distances)
 
-scaledDistances = [(distance - minDis)/maxDis for distance in distances]
+scaledDistances = [(distance - 0)/maxDis for distance in distances]
 
 workbook = xlwt.Workbook() 
 sheet = workbook.add_sheet("Tweets Comparison")
@@ -42,7 +46,7 @@ for row in xrange(1, len(tweet_comb)+1):
 for row in xrange(1, len(tweet_comb)+1):
   sheet.write(row, 1, scaledDistances[row-1])
 
-workbook.save("tweet20_comparison_toxic.xls") 
+workbook.save("tweet10_comparison_toxic.xls") 
 
 
 

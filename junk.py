@@ -11,24 +11,56 @@
 # 	plt.legend()
 # 	plt.show()
 
-a = range(100)
+import numpy as np
+from src.nlp.SemanticString import SemanticString
+from src.nlp.SemanticWord import SemanticWord
+# from test_kernel_functions import get_kernel
 
-print a[:10]
-print a[10:20]
+# db_name = 'db-text'
+# txt_name = 'test_kernel_data/%s.txt'	% db_name
 
-print sum([7.0])
+# kernel = get_kernel(db_name,normed=True)
 
-a = {'b':{'c':3.0}}
+# a = SemanticWord('book', 'NN', {}, kernel)
+# b = SemanticWord('study', 'NN', {}, kernel)
 
-print a.keys()
-print a['b'].values()
+# a = SemanticWord('study', 'NN', {}, {})
+# b = SemanticWord('study', 'NN', {}, {})
 
-print len([sum(a['b'].values())])
+# print a - b
 
-look = range(100)
+# print kernel['book']
 
-interval = (1,20)
+# print kernel['study']
 
-interval = 100 if interval == 'all' else look[interval[0]:interval[1]]
+# # print np.average([7,6,5,4,11,9,11,9,11,9])
 
-print interval
+# a = [1,1,1,1,1,1,1,1,1]
+# c = [.5,.3,.2]
+# c = [1,1,1]
+# d = [1,1,1]
+# # d = [.25,.35,.4]
+
+# total = sum([1*c1*d1 for c1 in c for d1 in d])
+
+# a = {1:2, 3:4}
+
+# print a.items()
+print ([2,4,6,7] + [2,6,8,2])
+
+import numpy as np
+import math
+
+a = np.array([1,2,3,4,5,6,7, 0])
+
+result = np.exp(a)
+
+print result
+
+result[result==1]=0
+
+print result
+
+
+
+

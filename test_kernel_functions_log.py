@@ -64,9 +64,13 @@ def wordcount_from_corpus(word_list, corpus):
 			dic[element] += 1
 	return dic
 
+def neg_inf_to_zero(array):
+	array[array==-np.inf] = 0
+	return array
+
 def create_kernel_from_wordcount(wordcount):
 	word_list = wordcount.keys()
-	senses = [list(set([sense.name[:sense.name.index('.')] for sense in SemanticWord(word,'NN',{}).synset])) for word in word_list]
+	senses = [list(set([sense.name[:sense.name.index('.')] for sense in SemanticWord(word,'NN',{},{}).synset])) for word in word_list]
 	count = [list(np.zeros(len(sense)).astype(int)) for sense in senses]
 	dic = {word: dict(zip(senses[i], count[i])) for i,word in enumerate(word_list)}
 	for word in dic.keys():
@@ -76,7 +80,7 @@ def create_kernel_from_wordcount(wordcount):
 	senses = [dic[word].keys() for word in word_list]
 	values = [dic[word].values() for word in word_list]
 	sum_of_dic = sum(np.sum(values))
-	new_values = [list(np.array(v) / float(sum_of_dic)) for v in values]
+	new_values = [list(neg_inf_to_zero(np.log(np.array(v) / float(sum_of_dic)))) for v in values]
 	return {word: dict(zip(senses[i], new_values[i])) for i,word in enumerate(word_list)}
 
 def duplicated_freq(kernel, all_senses):
@@ -295,10 +299,10 @@ def get_kernel(db_name,normed=True):
 
 
 
-# db_name = 'db-text'
-# txt_name = 'test_kernel_data/%s.txt'	% db_name
-# # kernel = get_kernel(db_name,normed=False)
-# normed_kernel = get_kernel(db_name,normed=True)
+db_name = 'db-text'
+txt_name = 'test_kernel_data/%s.txt'	% db_name
+# kernel = get_kernel(db_name,normed=False)
+normed_kernel = get_kernel(db_name,normed=True)
 
 # print len(normed_kernel)
 # bad_words = find_0freq_words_in_kernel(normed_kernel, with_senses=False)

@@ -2,21 +2,22 @@ import json
 import xlrd
 import numpy as np
 import matplotlib.pyplot as plt
-from test_kernel_functions import get_kernel
 
+# from scipy.stats import pearsonr
 from src.nlp.SemanticString import SemanticString
+from test_kernel_functions import get_kernel
 # from src.visualization.visualization import SemanticVisualization
 
 filename = './data/semantic-distance-database.json'
 READ = 'rb'
 db = json.load(open(filename,READ))
 
-db_name = 'db-text'
-kernel = get_kernel(db_name,normed=True)
-
 txt_name = './tweet_comparison_data/drink_20.txt'
 with open(txt_name) as f:
   strings = [tweet.strip() for tweet in f.readlines()]
+
+db_name = 'db-text'
+kernel = get_kernel(db_name,normed=True)
 
 lemmaStrings = [SemanticString(string, db, kernel).lemma() for string in strings]
 
@@ -24,14 +25,16 @@ wb_name = 'tweet_comparison_data/tweet20_comparison_total.xls'
 workbook_input = xlrd.open_workbook(wb_name)
 sheet_input = workbook_input.sheet_by_index(0)
 
-ntweets = {'10_tweets': {'toxic': 1, 'tru': 2, 'mike': 3, 'nick': 4, 'toxicNEW': 5, 'toxicKernel': 6},
-			'20_tweets': {'toxic': 1, 'nick': 2, 'tru': 3, 'mike': 4, 'toxicNEW': 5, 'toxicKernel': 6}}
+ntweets = {'10_tweets': {'toxic': 1, 'tru': 2, 'mike': 3, 'nick': 4, 'toxicNEW': 5, 'toxicKernel': 6, 'KernelLog': 7, 'KernelExp': 8},
+			'20_tweets': {'toxic': 1, 'nick': 2, 'tru': 3, 'mike': 4, 'toxicNEW': 5, 'toxicKernel': 6, 'KernelLog': 7, 'KernelExp': 8}}
 
 raters = ntweets['20_tweets']
 
-rater = 'toxicKernel'
+rater = 'KernelLog'
+rater1 = 'nick'
 
 data = [sheet_input.cell_value(row, raters[rater]) for row in xrange(1, sheet_input.nrows)]
+data1 = [sheet_input.cell_value(row, raters[rater1]) for row in xrange(1, sheet_input.nrows)]
 
 matrix = np.memmap('distances',dtype='float32',mode='w+',
                        shape=(len(lemmaStrings),len(lemmaStrings)))
@@ -42,8 +45,22 @@ for c in xrange(len(lemmaStrings)-1):
 		matrix[r,c] = data[i]
 		i += 1
 
-matrix += matrix.transpose()
+matrix1 = np.memmap('distances1',dtype='float32',mode='w+',
+                       shape=(len(lemmaStrings),len(lemmaStrings)))
+
+i = 0
+for c in xrange(len(lemmaStrings)-1):
+	for r in xrange(c+1, len(lemmaStrings)):
+		matrix1[r,c] = data1[i]
+		i += 1
+
+matrix1 = matrix1.transpose()
+matrix += matrix1
 matrix[np.diag_indices(len(lemmaStrings))] = 0
+
+# matrix += matrix.transpose()
+# matrix[np.diag_indices(len(lemmaStrings))] = 0
+# print pearsonr(np.triu(matrix),np.tril(matrix))
 
 sizes = {'10_tweets': (10,10), '20_tweets': (15,15)}
 
@@ -55,6 +72,7 @@ ax = fig.add_subplot(111)
 cax = ax.imshow(matrix,interpolation='nearest',aspect='auto')
 cax.set_clim(vmin=0,vmax=1.0)
 del matrix
+del matrix1
 ax.set_xticklabels(lemmaStrings, rotation = 'vertical')
 ax.set_yticklabels(lemmaStrings)
 plt.tight_layout()

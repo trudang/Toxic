@@ -23,7 +23,6 @@ class SemanticWord(object):
 		self.orphan = not self.synset
 		self.db = lookuptable
 
-
 	def lookup(self,other):
 		#construct query
 		query = '%s-%s'%(self.word,other.word)
