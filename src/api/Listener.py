@@ -21,7 +21,7 @@ class Listener(StreamListener):
 
         def on_data(self, data):
                 if 'in_reply_to_status' in data:
-                        if self.counter < self.ceiling:
+                        if self.count < self.ceiling:
                                 self.on_status(data)
                         else:
                                 self.output.write(']')
@@ -40,8 +40,8 @@ class Listener(StreamListener):
                         return false
 
         def on_status(self, status):
-                self.counter += 1
-                if self.counter%400 ==0:
+                self.count += 1
+                if self.count%400 ==0:
                         self.output.write(status)        
                         self.output.write(']')
                         self.output.close()

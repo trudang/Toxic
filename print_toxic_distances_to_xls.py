@@ -3,7 +3,7 @@ import itertools
 import xlwt
 import xlrd
 from src.nlp.SemanticString import SemanticString
-from test_kernel_functions import get_kernel
+# from test_kernel_functions import get_kernel
 
 filename = './data/semantic-distance-database.json'
 READ = 'rb'
@@ -13,8 +13,13 @@ txt_name = './tweet_comparison_data/drink_10.txt'
 with open(txt_name) as f:
 	strings = [tweet.strip() for tweet in f.readlines()]
 
-db_name = 'db-text'
-kernel = get_kernel(db_name,normed=True)
+# db_name = 'db-text'
+# kernel = get_kernel(db_name,normed=True)
+
+wordfreq_name = 'test_kernel_data/db-text_wordfreq.txt'
+
+with open(wordcount_name,'r') as f:
+	kernel = eval(f.readline()) #.rstrip('\n')
 
 lemmaStrings = [SemanticString(string, db, kernel).lemma() for string in strings]
 
@@ -44,7 +49,7 @@ for row in xrange(1, len(tweet_comb)+1):
 	sheet.write(row, 0, tweet_comb[row-1])
 
 for row in xrange(1, len(tweet_comb)+1):
-  sheet.write(row, 1, scaledDistances[row-1])
+	sheet.write(row, 1, scaledDistances[row-1])
 
 workbook.save("tweet10_comparison_toxic.xls") 
 
